@@ -1,21 +1,20 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
+import { getUser } from "./auth/[...thirdweb]";
+import { NextApiRequest, NextApiResponse } from "next";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: any, res: any) => {
-  // Get the session on the server-side by passing in our previously configured authOptions
-  const session = await getServerSession(req, res, authOptions);
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    // Get the user off the request
+    const user = await getUser(req);
 
-  if (!session) {
-    res.status(401).json({ message: "Not authorized." });
-    return;
-  }
+    // Check if the user is authenticated
+    if (!user) {
+        return res.status(401).json({
+            message: "Not authorized.",
+        });
+    }
 
-  // Get the wallet address if the user is logged in with their wallet
-  // Otherwise get their email
-  return res.status(200).json({
-    message: `This is a secret for ${
-      session.user?.address || session.user?.email
-    }`,
-  });
+    // Return a protected resource to the authenticated user
+    return res.status(200).json({
+        message: `This is a secret for ${user.address}.`,
+    });
 };

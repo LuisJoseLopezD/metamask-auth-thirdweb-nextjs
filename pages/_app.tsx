@@ -18,7 +18,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                 clientId="d0d9a768e4b9809a494a792b60efa49e"
 
                 authConfig={{
-                    authUrl: "http://localhost:3000/api/auth/[...nextauth]",
+                    authUrl: "http://localhost:3000/api/auth/",
                     domain: process.env.NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN || "http://localhost:3000/",
                 }}
             >

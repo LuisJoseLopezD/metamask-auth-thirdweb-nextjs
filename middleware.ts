@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (req:any){
+    
     let verify = req.cookies.get("next-auth.session-token");
     let url = req.url
     

@@ -18,7 +18,7 @@ export default function Dashboard() {
     const { data: session } = useSession();
     const { user, isLoggedIn, isLoading } = useUser();
 
-    console.log(session);
+    // console.log(session);
 
     async function logoutAccount() {
         try {
@@ -28,29 +28,6 @@ export default function Dashboard() {
             console.log(error);
         }
     }
-
-    // const validateRoute = (): void => {
-    //     try {
-    //         if (!isLoggedIn && !address) {
-    //             setLoading(true);
-    //             router.push("/");
-    //             setLoading(false);
-    //             return;
-    //         } else {
-    //             return null
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     if (!isLoggedIn && !address) {
-    //         setLoading(true);
-    //         push('/');
-    //         setLoading(false);
-    //     }
-    // }, []);
 
     return (
         <>
