@@ -14,9 +14,11 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     return (
         <SessionProvider session={session}>
             <ThirdwebProvider
+            
                 clientId="d0d9a768e4b9809a494a792b60efa49e"
+
                 authConfig={{
-                    // authUrl: "/api/auth/[...nextauth]",
+                    authUrl: "http://localhost:3000/api/auth/[...nextauth]",
                     domain: process.env.NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN || "http://localhost:3000/",
                 }}
             >

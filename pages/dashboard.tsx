@@ -10,10 +10,10 @@ export default function Dashboard() {
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const auth = useAuth();
     const address = useAddress();
     const { data } = useBalance(NATIVE_TOKEN_ADDRESS);
     const { logout } = useLogout();
+    const { push } = useRouter();
     const router = useRouter();
     const { data: session } = useSession();
     const { user, isLoggedIn, isLoading } = useUser();
@@ -22,48 +22,42 @@ export default function Dashboard() {
 
     async function logoutAccount() {
         try {
-            // signOut();
-            // logout();
-            router.push('/');
+            await signOut();
+            push('/');
         } catch (error) {
             console.log(error);
         }
     }
 
-    //FIRMA
-    async function loginWithWallet() {
-        // Prompt the user to sign a login with wallet message
-        const payload = await auth?.login();
+    // const validateRoute = (): void => {
+    //     try {
+    //         if (!isLoggedIn && !address) {
+    //             setLoading(true);
+    //             router.push("/");
+    //             setLoading(false);
+    //             return;
+    //         } else {
+    //             return null
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
-        // Then send the payload to next auth as login credentials
-        // using the "credentials" provider method
-        await signIn("credentials", {
-            payload: JSON.stringify(payload),
-            redirect: false,
-        });
-    }
-
-    //TODO: maybe put this in a function
-    useEffect(() => {
-        if (!isLoggedIn && !address) {
-            setLoading(true);
-            router.push("/");
-            setLoading(false);
-        }
-    }, [isLoggedIn, address, router]);
+    // useEffect(() => {
+    //     if (!isLoggedIn && !address) {
+    //         setLoading(true);
+    //         push('/');
+    //         setLoading(false);
+    //     }
+    // }, []);
 
     return (
         <>
             {
-                !isLoading ?
+                !loading ?
 
                     <div>
-                        {
-                            !session ?
-                                <button className="bg-yellow-500" onClick={loginWithWallet}>login with wallet</button>
-                                :
-                                null
-                        }
                         <button className="bg-red-500" onClick={() => logoutAccount()}>logout</button>
                         <pre>Wallet: {address?.substring(0, 6)}...${address?.substring(38)}</pre>
                         <pre>Balance: {data ? data.displayValue.substr(0, 5) : null} TBNB</pre>
